@@ -1,3 +1,25 @@
-h1 Tasks#index
-p Find me in app/views/tasks/index.html.slim
-p hello hello
+h1 タスク一覧
+
+= link_to '新規登録', new_task_path, class: 'btn btn-outline-success'
+
+.mb-3
+table.table.table-hover
+  thead.thead-default
+    tr
+      th= Task.human_attribute_name(:name)
+      th= Task.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @tasks.each do |task|
+      tr
+        td= link_to task.name, task_path(task)
+        td= task.updated_at
+        td
+          = link_to '編集', edit_task_path(task), class: 'btn btn-outline-primary mr-3'
+          = link_to '削除', task, method: :delete, data: {confirm: "task #{task.name} を削除しますか？"}, class: 'btn btn-outline-danger mr-3'
+
+
+  body
+    .container
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice

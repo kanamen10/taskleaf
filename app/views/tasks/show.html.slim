@@ -1,2 +1,23 @@
-h1 Tasks#show
-p Find me in app/views/tasks/show.html.slim
+h1 Task Description
+
+.nav.justify-content-end
+  = link_to '一覧', tasks_path, class: 'nav-link'
+table.table.table-hover
+  tbody
+    tr
+      th = Task.human_attribute_name(:id)
+      th = @task.name
+    tr
+      th = Task.human_attribute_name(:name)
+      th = @task.name
+    tr
+      th = Task.human_attribute_name(:description)
+      td = simple_format(h(@task.description), {}, sanitize: false, wrapper_tag: "div")
+    tr
+      th = Task.human_attribute_name(:created_at)
+      th = @task.created_at
+    tr
+      th = Task.human_attribute_name(:updated_at)
+      th = @task.updated_at
+=link_to 'EDIT', edit_task_path, class: 'btn btn-outline-warning mr-3'
+= link_to '削除', @task, method: :delete, data: {confirm: "task #{@task.name} を削除しますか？"}, class: 'btn btn-outline-danger mr-3'
