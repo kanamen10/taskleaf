@@ -1,0 +1,2 @@
+class AddAdminToUser < ApplicationRecord
+end
