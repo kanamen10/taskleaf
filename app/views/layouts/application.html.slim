@@ -10,5 +10,17 @@ html
   body
     .app-title.navbar.navbar-expand-md.navbar-light.bg-light
       .navbar-brand Taskleaf
+  
+    ul.navbar-nav.ml-auto
+      - if current_user
+        tr
+          td
+            = link_to 'タスク一覧', tasks_path, class: 'btn btn-outline-success mr-3'
+            = link_to 'ユーザ一覧', admin_users_path, class: 'btn btn-outline-success mr-3'
+            = link_to 'ログアウト', logout_path, method: :delete,  class: 'btn btn-outline-danger mr-3'
+      - else
+        tr
+          td
+            = link_to 'ログイン', login_path, class: 'btn btn-outline-success mr-3'
     .container
     = yield
