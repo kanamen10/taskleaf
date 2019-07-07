@@ -1,0 +1,15 @@
+h1 LOGIN
+
+= form_with scope: :session, local: true do |f|
+  .form-group
+    = f.label :email
+    = f.text_field :email, class: 'form-control', id: 'session_email'
+  .form-group
+    = f.label :password
+    = f.password_field :password, class: 'form-control', id: 'session_password'
+  = f.submit "LOGIN", class: 'btn btn-outline-success'
+
+body
+  .container
+    - if flash.notice.present?
+      .alert.alert-success= flash.notice
