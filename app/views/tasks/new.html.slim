@@ -4,3 +4,8 @@ h1 タスクの新規作成
   = link_to '一覧', tasks_path, class: 'nav-link'
 
 = render partial: 'form', locals: {task: @task}
+
+body
+  .container
+    - if flash.notice.present?
+      .alert.alert-danger= flash.notice
