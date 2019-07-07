@@ -16,7 +16,8 @@ html
         tr
           td
             = link_to 'タスク一覧', tasks_path, class: 'btn btn-outline-success mr-3'
-            = link_to 'ユーザ一覧', admin_users_path, class: 'btn btn-outline-success mr-3'
+            - if current_user.admin?
+              = link_to 'ユーザ一覧', admin_users_path, class: 'btn btn-outline-success mr-3'
             = link_to 'ログアウト', logout_path, method: :delete,  class: 'btn btn-outline-danger mr-3'
       - else
         tr
