@@ -1,2 +1,23 @@
-h1 Admin::Users#show
-p Find me in app/views/admin/users/show.html.slim
+h1 User詳細
+
+.nav.justify-content-end
+  = link_to '一覧', admin_users_path, class: 'nav-link'
+table.table.table-hover
+  tbody
+    tr
+      th = User.human_attribute_name(:id)
+      th = @user.name
+    tr
+      th = User.human_attribute_name(:name)
+      th = @user.name
+    tr
+      th = User.human_attribute_name(:email)
+      td = simple_format(h(@user.email), {}, sanitize: false, wrapper_tag: "div")
+    tr
+      th = User.human_attribute_name(:created_at)
+      th = @user.created_at
+    tr
+      th = User.human_attribute_name(:updated_at)
+      th = @user.updated_at
+=link_to 'EDIT', edit_admin_user_path(@user), class: 'btn btn-outline-warning mr-3'
+= link_to '削除', [:admin, @user], method: :delete, data: {confirm: "user #{@user.name} を削除しますか？"}, class: 'btn btn-outline-danger mr-3'

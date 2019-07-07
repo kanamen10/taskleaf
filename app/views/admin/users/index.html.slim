@@ -1,2 +1,29 @@
-h1 Admin::Users#index
-p Find me in app/views/admin/users/index.html.slim
+h1 ユーザ一覧
+
+= link_to '新規登録', new_admin_user_path, class: 'btn btn-outline-success'
+
+.mb-3
+table.table.table-hover
+  thead.thead-default
+    tr
+      th= User.human_attribute_name(:name)
+      th= User.human_attribute_name(:email)
+      th= User.human_attribute_name(:admin)
+      th= User.human_attribute_name(:updated_at)
+      th
+  tbody
+    - @users.each do |user|
+      tr
+        td= user.name
+        td= user.email
+        td= user.admin? ? 'Yes' : 'No'
+        td= user.updated_at
+        td
+          = link_to '編集', edit_admin_user_path(user), class: 'btn btn-outline-primary mr-3'
+          = link_to '削除', admin_user_path(user), method: :delete, data: {confirm: "ユーザ #{user.name} を削除しますか？"}, class: 'btn btn-outline-danger mr-3'
+
+
+  body
+    .container
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice
