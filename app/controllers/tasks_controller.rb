@@ -1,10 +1,14 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    # @tasks = Task.all
+    # taskのuser_idとuserのidを紐づけたので下記に変更
+    # @tasks = current_user.tasks でもよい
+    @tasks = Task.where(user_id: current_user.id)
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
+    # @task = Task.where(params[:id], user_id: current_user.id)
   end
 
   def new
@@ -28,7 +32,9 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    # @task = Task.new(task_params)
+    # taskのuser_idとuserのidを紐づけたので下記に変更
+    @task = Task.new(task_params.merge(user_id: current_user.id))
     if @task.save
       redirect_to tasks_url, notice: "タスク #{@task.name} を登録しました。"
     else
