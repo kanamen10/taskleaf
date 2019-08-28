@@ -13,4 +13,6 @@ class Task < ApplicationRecord
   end
 
   belongs_to :user
+
+  scope :recent, -> { order(created_at: :desc) }
 end
