@@ -2,11 +2,12 @@
   ul#error_explanation
     - task.errors.full_messages.each do |message|
       li = message
+
 = form_with model: task, local: true do |f|
   .form-group
-    = f.label :name
+    = f.label :name, 'name'
     = f.text_field :name, class: 'form-control', id: 'task_name'
   .form-group
-    = f.label :description
+    = f.label :description, 'description'
     = f.text_field :description, class: 'form-control', id: 'task_desctiption'
   = f.submit "SUBMIT!", class: 'btn btn-outline-danger'

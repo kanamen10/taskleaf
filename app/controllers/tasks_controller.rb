@@ -3,7 +3,9 @@ class TasksController < ApplicationController
     # @tasks = Task.all
     # taskのuser_idとuserのidを紐づけたので下記に変更
     # @tasks = current_user.tasks でもよい
-    @tasks = Task.where(user_id: current_user.id)
+    @q = current_user.tasks.ransack(params[:q])
+    @tasks = @q.result(distinct: true)
+    # @tasks = Task.where(user_id: current_user.id)
   end
 
   def show
@@ -13,6 +15,11 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+  end
+
+  def confirm_new
+    @task = current_user.tasks.new(task_params)
+    render :new unless @task.valid?
   end
 
   def edit
@@ -35,7 +42,15 @@ class TasksController < ApplicationController
     # @task = Task.new(task_params)
     # taskのuser_idとuserのidを紐づけたので下記に変更
     @task = Task.new(task_params.merge(user_id: current_user.id))
+    
+    if params[:back].present?
+      render :new
+      return
+    end
+
     if @task.save
+      TaskMailer.creation_email(@task).deliver_now
+      logger.debug "task: #{@task.attributes.inspect}"
       redirect_to tasks_url, notice: "タスク #{@task.name} を登録しました。"
     else
       render :new

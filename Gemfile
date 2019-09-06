@@ -38,6 +38,7 @@ gem 'bootstrap'
 gem 'html2slim'
 gem 'slim-rails'
 gem 'solargraph'
+gem 'ransack'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # add gem 2019/07/16 by kanamen10
@@ -60,6 +61,7 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'chromedriver-helper'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
