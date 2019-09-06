@@ -10,4 +10,7 @@
   .form-group
     = f.label :description, 'description'
     = f.text_field :description, class: 'form-control', id: 'task_desctiption'
+  .form-group
+    = f.label :image, 'image'
+    = f.file_field :image, class: 'form-control', id: 'task_image'
   = f.submit "SUBMIT!", class: 'btn btn-outline-danger'
