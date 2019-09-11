@@ -4,8 +4,19 @@ class TasksController < ApplicationController
     # taskのuser_idとuserのidを紐づけたので下記に変更
     # @tasks = current_user.tasks でもよい
     @q = current_user.tasks.ransack(params[:q])
-    @tasks = @q.result(distinct: true)
+    @tasks = @q.result(dinstinct: true).page(params[:page]).per(10)
+    # @tasks = @q.result(distinct: true)
     # @tasks = Task.where(user_id: current_user.id)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @tasks.generate_csv, filename: "tasks-#{Time.zone.now.strftime('%y%m%d%s')}.csv" }
+    end
+  end
+
+  def import
+    current_user.tasks.import(params[:file])
+    redirect_to tasks_url, notice: "タスクを追加しました"
   end
 
   def show
