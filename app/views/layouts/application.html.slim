@@ -6,22 +6,49 @@ html
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .app-title.navbar.navbar-expand-md.navbar-light.bg-light
-      .navbar-brand Taskleaf
-  
-    ul.navbar-nav.ml-auto
+    / .app-title.navbar.navbar-expand-md.navbar-light.bg-light
+      / .navbar-brand Taskleaf
+
+    nav.navbar.navbar-dark.bg-dark
+      a.navbar-brand[href="/tasks"]
+        | Taskleaf
+      button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navmenu1" aria-controls="navmenu1" aria-expanded="false" aria-label="Toggle navigation"]
+        span.navbar-toggler-icon
       - if current_user
-        tr
-          td
-            = link_to 'タスク一覧', tasks_path, class: 'btn btn-outline-success mr-3'
+        #navmenu1.collapse.navbar-collapse
+          .navbar-nav
+            a.nav-item.nav-link[href="/tasks"]
+              | タスク一覧
             - if current_user.admin?
-              = link_to 'ユーザ一覧', admin_users_path, class: 'btn btn-outline-success mr-3'
-            = link_to 'ログアウト', logout_path, method: :delete,  class: 'btn btn-outline-danger mr-3'
+              a.nav-item.nav-link[href="/admin/users"]
+                | ユーザ一覧
+              = link_to 'ログアウト', logout_path, method: :delete
+              / | ログアウト
       - else
-        tr
-          td
-            = link_to 'ログイン', login_path, class: 'btn btn-outline-success mr-3'
+        #navmenu1.collapse.navbar-collapse
+          .navbar-nav
+            a.nav-item.nav-link[href="login"]
+              | ログイン
+      
+    script[src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"]
+    script[src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"]
+    script[src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"]        
+    
     .container
     = yield
+
+        
+    / ul.navbar-nav.ml-auto
+    /   - if current_user
+    /     tr
+    /       td
+    /         = link_to 'タスク一覧', tasks_path, class: 'btn btn-outline-success mr-3'
+    /         - if current_user.admin?
+    /           = link_to 'ユーザ一覧', admin_users_path, class: 'btn btn-outline-success mr-3'
+    /         = link_to 'ログアウト', logout_path, method: :delete,  class: 'btn btn-outline-danger mr-3'
+    /   - else
+    /     tr
+    /       td
+    /         = link_to 'ログイン', login_path, class: 'btn btn-outline-success mr-3'

@@ -45,8 +45,10 @@ class TasksController < ApplicationController
 
   def destroy
     task = Task.find(params[:id])
+    # byebug
     task.destroy
-    redirect_to tasks_url, notice: "Task #{task.name}を削除しました！"
+    # redirect_to tasks_url, notice: "Task #{task.name}を削除しました！"
+    head :no_content
   end
 
   def create
@@ -61,7 +63,8 @@ class TasksController < ApplicationController
 
     if @task.save
       TaskMailer.creation_email(@task).deliver_now
-      logger.debug "task: #{@task.attributes.inspect}"
+      SampleJob.perform_later
+      # logger.debug "task: #{@task.attributes.inspect}"
       redirect_to tasks_url, notice: "タスク #{@task.name} を登録しました。"
     else
       render :new

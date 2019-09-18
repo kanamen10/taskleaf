@@ -36,10 +36,12 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Add gem 2019/06/30 by Kanamen10
 gem 'bootstrap'
 gem 'html2slim'
+gem 'kaminari'
+gem 'ransack'
+gem 'rubocop'
+gem 'sidekiq'
 gem 'slim-rails'
 gem 'solargraph'
-gem 'ransack'
-gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
