@@ -44,11 +44,10 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
-    # byebug
-    task.destroy
+    @task = Task.find(params[:id])
+    @task.destroy
     # redirect_to tasks_url, notice: "Task #{task.name}を削除しました！"
-    head :no_content
+    # head :no_content
   end
 
   def create
